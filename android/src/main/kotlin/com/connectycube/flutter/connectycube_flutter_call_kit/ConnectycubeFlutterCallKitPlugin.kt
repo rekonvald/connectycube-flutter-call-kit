@@ -157,12 +157,18 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
 
     private fun setOnLockScreenVisibility(isVisible: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            mainActivity?.setShowWhenLocked(isVisible)
+            mainActivity?.setShowWhenLocked(isVisible);
+            mainActivity?.setTurnScreenOn(true);
         } else {
             if (isVisible) {
-                mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+                mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+                mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             } else {
-                mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+                mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }
         }
     }
