@@ -30,6 +30,7 @@ import io.flutter.plugin.common.PluginRegistry
 class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.NewIntentListener, ActivityAware, BroadcastReceiver() {
     private var applicationContext: Context? = null
     private var mainActivity: Activity? = null
+    private var myLaunchIntent: Intent? = null
     private lateinit var channel: MethodChannel
     private lateinit var localBroadcastManager: LocalBroadcastManager
 
@@ -216,6 +217,7 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
                 channel.invokeMethod("onCallAccepted", parameters)
 
                 val launchIntent = getLaunchIntent(context!!)
+                myLaunchIntent = launchIntent;
                 launchIntent?.action = ACTION_CALL_ACCEPT
                 context.startActivity(launchIntent)
             }
