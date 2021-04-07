@@ -158,7 +158,7 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
     private fun setOnLockScreenVisibility(isVisible: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             mainActivity?.setShowWhenLocked(isVisible);
-            mainActivity?.setTurnScreenOn(true);
+            mainActivity?.setTurnScreenOn(isVisible);
         } else {
             if (isVisible) {
                 mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
@@ -264,6 +264,7 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
     private fun processCallEnded(sessionId: String) {
         if (applicationContext == null) return
 
+        val callState = getCallState(sessionId)
         saveCallState(sessionId, CALL_STATE_REJECTED)
         cancelCallNotification(applicationContext!!, sessionId)
 
@@ -272,5 +273,10 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
         bundle.putString(EXTRA_CALL_ID, sessionId)
         broadcastIntent.putExtras(bundle)
         localBroadcastManager.sendBroadcast(broadcastIntent)
+        if (CALL_STATE_UNKNOWN != callState) {
+            mainActivity?.finish();
+            myLaunchIntent?.action = ACTION_CALL_REJECT
+            mainActivity?.startActivity(myLaunchIntent)
+        }
     }
 }
