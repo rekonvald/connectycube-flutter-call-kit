@@ -23,6 +23,8 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
+import android.content.SharedPreferences
+import android.content.Context
 
 
 /** ConnectycubeFlutterCallKitPlugin */
@@ -219,6 +221,8 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
                 val launchIntent = getLaunchIntent(context!!)
                 myLaunchIntent = launchIntent;
                 launchIntent?.action = ACTION_CALL_ACCEPT
+                val sharedPref: SharedPreferences = context.getSharedPreferences("lockKey", Context.MODE_PRIVATE)
+                sharedPref?.edit()?.putBoolean("locked", false)?.commit();
                 context.startActivity(launchIntent)
             }
         }
@@ -278,6 +282,8 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
         if (CALL_STATE_UNKNOWN != callState) {
             mainActivity?.finish();
             myLaunchIntent?.action = ACTION_CALL_REJECT
+            val sharedPref: SharedPreferences? = mainActivity?.getSharedPreferences("lockKey", Context.MODE_PRIVATE)
+            sharedPref?.edit()?.putBoolean("locked", true)?.commit();
             mainActivity?.startActivity(myLaunchIntent)
         }
     }
