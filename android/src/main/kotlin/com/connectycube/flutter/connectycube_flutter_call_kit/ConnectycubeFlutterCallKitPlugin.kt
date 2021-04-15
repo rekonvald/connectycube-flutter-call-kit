@@ -281,7 +281,7 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
         bundle.putString(EXTRA_CALL_ID, sessionId)
         broadcastIntent.putExtras(bundle)
         localBroadcastManager.sendBroadcast(broadcastIntent)
-        if (CALL_STATE_UNKNOWN != callState) {
+        if (CALL_STATE_ACCEPTED == callState) {
             mainActivity?.finish();
             myLaunchIntent?.action = ACTION_CALL_REJECT
             val sharedPref: SharedPreferences? = mainActivity?.getSharedPreferences("lockKey", Context.MODE_PRIVATE)
