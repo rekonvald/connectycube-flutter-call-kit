@@ -21,6 +21,11 @@ const val CALL_CHANNEL_ID = "calls_channel_id"
 const val CALL_CHANNEL_NAME = "Calls"
 
 
+fun cancelAllCallNotification(context: Context) {
+    val notificationManager = NotificationManagerCompat.from(context)
+    notificationManager.cancelAll()
+}
+
 fun cancelCallNotification(context: Context, callId: String) {
     val notificationManager = NotificationManagerCompat.from(context)
     notificationManager.cancel(callId.hashCode())

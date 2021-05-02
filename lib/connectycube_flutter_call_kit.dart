@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 typedef Future<dynamic> CallEventHandler(
-  String sessionId,
-  int callType,
-  int callerId,
-  String callerName,
-  Set<int> opponentsIds,
-);
+    String sessionId,
+    int callType,
+    int callerId,
+    String callerName,
+    Set<int> opponentsIds,
+    );
 
 class ConnectycubeFlutterCallKit {
   static const MethodChannel _channel =
-      const MethodChannel('connectycube_flutter_call_kit');
+  const MethodChannel('connectycube_flutter_call_kit');
 
   static ConnectycubeFlutterCallKit get instance => _getInstance();
   static ConnectycubeFlutterCallKit _instance;
@@ -32,12 +32,12 @@ class ConnectycubeFlutterCallKit {
   ConnectycubeFlutterCallKit._internal();
 
   static Function(
-    String sessionId,
-    int callType,
-    int callerId,
-    String callerName,
-    Set<int> opponentsIds,
-  ) onCallAcceptedWhenTerminated;
+      String sessionId,
+      int callType,
+      int callerId,
+      String callerName,
+      Set<int> opponentsIds,
+      ) onCallAcceptedWhenTerminated;
 
   static CallEventHandler _onCallAccepted;
   static CallEventHandler _onCallRejected;
@@ -72,6 +72,12 @@ class ConnectycubeFlutterCallKit {
       'caller_name': callerName,
       'call_opponents': opponentsIds.join(','),
     });
+  }
+
+  static Future<void> cancelAllCallNotification() async {
+    if (!Platform.isAndroid) return;
+
+    return _channel.invokeMethod("cancelAllCallNotification");
   }
 
   static Future<void> reportCallAccepted({

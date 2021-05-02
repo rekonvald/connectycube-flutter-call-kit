@@ -73,6 +73,15 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
                     result.error("ERROR", e.message, "")
                 }
             }
+            "cancelAllCallNotification" -> {
+                try {
+                    cancelAllCallNotification(applicationContext!!)
+
+                    result.success(null)
+                } catch (e: Exception) {
+                    result.error("ERROR", e.message, "")
+                }
+            }
 
             "reportCallAccepted" -> {
                 try {
@@ -169,10 +178,7 @@ class ConnectycubeFlutterCallKitPlugin : FlutterPlugin, MethodCallHandler, Plugi
                 mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 mainActivity?.window?.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             } else {
-                mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
                 mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-                mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-                mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 mainActivity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }
         }
