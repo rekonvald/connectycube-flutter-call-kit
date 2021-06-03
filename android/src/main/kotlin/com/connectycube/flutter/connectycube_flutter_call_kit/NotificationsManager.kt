@@ -84,7 +84,7 @@ fun createCallNotification(context: Context, title: String, text: String?, pendi
         .setCategory(NotificationCompat.CATEGORY_CALL)
         .setContentIntent(pendingIntent)
         .setSound(ringtone)
-        .setVibrate(LongArray(1){60000L})
+        .setVibrate(LongArrayOf(60000L))
         .setPriority(NotificationCompat.PRIORITY_MAX)
         .setTimeoutAfter(60000)
     return notificationBuilder
