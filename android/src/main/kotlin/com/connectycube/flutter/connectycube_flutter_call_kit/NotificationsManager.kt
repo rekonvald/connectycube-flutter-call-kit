@@ -13,8 +13,8 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.Notification
+import androidx.core.app.NotificationManager
 import com.connectycube.flutter.connectycube_flutter_call_kit.utils.getColorizedText
 
 const val CALL_CHANNEL_ID = "calls_channel_id"
@@ -210,7 +210,7 @@ fun createCallNotificationChannel(notificationManager: NotificationManagerCompat
     }
 }
 
-fun setNotificationSmallIcon(context: Context, notificationBuilder: NotificationCompat.Builder) {
+fun setNotificationSmallIcon(context: Context, notificationBuilder: Notification.Builder) {
     val resID = context.resources.getIdentifier("ic_launcher_foreground", "drawable", context.packageName)
     if (resID != 0) {
         notificationBuilder.setSmallIcon(resID)
@@ -219,7 +219,7 @@ fun setNotificationSmallIcon(context: Context, notificationBuilder: Notification
     }
 }
 
-fun setNotificationColor(context: Context, notificationBuilder: NotificationCompat.Builder) {
+fun setNotificationColor(context: Context, notificationBuilder: Notification.Builder) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val accentID = context.resources.getIdentifier("call_notification_color_accent", "color", context.packageName)
         if (accentID != 0) {
