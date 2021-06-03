@@ -14,7 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompatManager
+import androidx.core.app.NotificationManagerCompat
 import com.connectycube.flutter.connectycube_flutter_call_kit.utils.getColorizedText
 
 const val CALL_CHANNEL_ID = "calls_channel_id"
