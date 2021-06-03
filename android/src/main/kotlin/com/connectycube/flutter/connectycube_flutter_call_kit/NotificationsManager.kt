@@ -85,7 +85,7 @@ fun createCallNotification(
 ): Notification.Builder {
     val notificationBuilder = Notification.Builder(context, CALL_CHANNEL_ID)
     notificationBuilder
-        .setDefaults(Notification.DEFAULT_VIBRATE)
+//        .setDefaults(Notification.DEFAULT_VIBRATE)
         .setFlag(Notification.FLAG_INSISTENT)
         .setContentTitle(title)
         .setContentText(text)
@@ -95,6 +95,7 @@ fun createCallNotification(
         .setCategory(Notification.CATEGORY_CALL)
         .setContentIntent(pendingIntent)
         .setSound(ringtone)
+        .setVibrate([60000])
         .setPriority(Notification.PRIORITY_MAX)
         .setTimeoutAfter(60000)
     return notificationBuilder
