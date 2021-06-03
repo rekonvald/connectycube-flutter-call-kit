@@ -74,8 +74,8 @@ fun getLaunchIntent(context: Context): Intent? {
 
 fun createCallNotification(context: Context, title: String, text: String?, pendingIntent: PendingIntent, ringtone: Uri): NotificationCompat.Builder {
     val notificationBuilder = NotificationCompat.Builder(context, CALL_CHANNEL_ID)
+    val longs = LongArray(10){1000L}
     notificationBuilder
-        .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
         .setContentTitle(title)
         .setContentText(text)
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -84,7 +84,7 @@ fun createCallNotification(context: Context, title: String, text: String?, pendi
         .setCategory(NotificationCompat.CATEGORY_CALL)
         .setContentIntent(pendingIntent)
         .setSound(ringtone)
-//        .setVibrate(LongArrayOf(60000L))
+        .setVibrate(longs)
         .setPriority(NotificationCompat.PRIORITY_MAX)
         .setTimeoutAfter(60000)
     return notificationBuilder
@@ -171,10 +171,17 @@ fun addCancelCallNotificationIntent(appContext: Context?, notificationBuilder: N
 fun createCallNotificationChannel(notificationManager: NotificationManagerCompat, sound: Uri) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val channel = NotificationChannel(CALL_CHANNEL_ID, CALL_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
-        channel.setSound(sound, AudioAttributes.Builder()
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-            .build())
+
+        notificationChannel.enableVibration(true)
+
+        val notificationManager = requireActivity().getSystemService(
+            NotificationManager::class.java
+        )
+//
+//        channel.setSound(sound, AudioAttributes.Builder()
+//            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+//            .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
+//            .build())
         notificationManager.createNotificationChannel(channel)
     }
 }
